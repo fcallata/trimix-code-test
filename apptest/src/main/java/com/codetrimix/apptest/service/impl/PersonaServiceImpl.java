@@ -42,6 +42,11 @@ public class PersonaServiceImpl implements PersonaService {
 	public List<Persona> getAll() {
 		return personaDao.getAll();
 	}
+
+	@Override
+	public List<Persona> getPersonasByFiltro(String nombre, String tipoDocumento) {
+		return personaDao.getPersonasByFiltro(nombre, tipoDocumento);
+	}
 	
 	
 

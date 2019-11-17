@@ -11,4 +11,5 @@ public interface PersonaService {
 	public void delete(Long idPersona);
 	public Persona getPersona(Long idPersona);
 	public List<Persona> getAll();
+	public List<Persona> getPersonasByFiltro(String nombre, String tipoDocumento);
 }

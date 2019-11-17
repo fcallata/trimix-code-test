@@ -1,0 +1,58 @@
+<form [formGroup]="busquedaForm" (ngSubmit)="onSubmit(busquedaForm.value)">
+  <div class="form-container">
+    <mat-form-field floatLabel="always">
+        <input  matInput type="text" placeholder="Nombre" formControlName="nombre" required>
+        <mat-error *ngIf="hasError('nombre', 'required')">El nombre es requerido</mat-error>
+    </mat-form-field>
+
+    <mat-form-field floatLabel="always">
+        <input  matInput type="text" placeholder="Tipo Documento" formControlName="tipoDocumento" required>
+        <mat-error *ngIf="hasError('tipoDocumento', 'required')">El Tipo de Documento es requerido</mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary"  [disabled]="!busquedaForm.valid">Buscar</button>
+  </div>
+</form>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> Id </th>
+    <td mat-cell *matCellDef="let element"> {{element.perId}} </td>
+  </ng-container>
+  
+  <ng-container matColumnDef="apellido">
+    <th mat-header-cell *matHeaderCellDef> Apellido </th>
+    <td mat-cell *matCellDef="let element"> {{element.perApellido}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="nombre">
+    <th mat-header-cell *matHeaderCellDef> Nombre </th>
+    <td mat-cell *matCellDef="let element"> {{element.perNombre}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="fechaNacimiento">
+    <th mat-header-cell *matHeaderCellDef> Fecha Nacimiento </th>
+    <td mat-cell *matCellDef="let element"> {{element.perFechaNacimiento}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="tipo">
+    <th mat-header-cell *matHeaderCellDef> Tipo Dni </th>
+    <td mat-cell *matCellDef="let element"> {{element.perTipoDocumento}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="numero">
+    <th mat-header-cell *matHeaderCellDef> Nro Documento </th>
+    <td mat-cell *matCellDef="let element"> {{element.perNumeroDocumento}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="action">
+    <th mat-header-cell *matHeaderCellDef> Acciones</th>
+    <td mat-cell *matCellDef="let element">
+    <a mat-button [routerLink]="['/persona',element.perId]"><mat-icon>edit</mat-icon></a>
+    <button (click)="eliminarPersona(element.perId)"><mat-icon>delete</mat-icon></button>
+  </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
