@@ -10,12 +10,14 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './pages/home/home.component';
 import { PersonaComponent } from './pages/persona/persona.component';
+import { ConfirmacionDialogComponent } from './components/confirmacion-dialog/confirmacion-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    PersonaComponent
+    PersonaComponent,
+    ConfirmacionDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -26,6 +28,7 @@ import { PersonaComponent } from './pages/persona/persona.component';
     routing,
     HttpClientModule
   ],
+  entryComponents : [ConfirmacionDialogComponent],
   providers: [appRoutingProviders],
   bootstrap: [AppComponent]
 })

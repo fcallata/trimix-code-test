@@ -49,7 +49,7 @@
     <th mat-header-cell *matHeaderCellDef> Acciones</th>
     <td mat-cell *matCellDef="let element">
     <a mat-button [routerLink]="['/persona',element.perId]"><mat-icon>edit</mat-icon></a>
-    <button (click)="eliminarPersona(element.perId)"><mat-icon>delete</mat-icon></button>
+    <button (click)="openDialog(element.perId)"><mat-icon>delete</mat-icon></button>
   </td>
   </ng-container>
 

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PersonaService } from '../../services/persona.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material';
+import { ConfirmacionDialogComponent } from 'src/app/components/confirmacion-dialog/confirmacion-dialog.component';
 
 @Component({
   selector: 'app-home',
@@ -15,18 +17,13 @@ export class HomeComponent implements OnInit {
   dataSource: any;
 
   constructor(
-    private _personaService: PersonaService
+    private _personaService: PersonaService,
+    public dialog : MatDialog
   ){}  
 
   ngOnInit() {
-    this._personaService.getPersonas().subscribe(
-      result => {
-        this.dataSource = result;        
-      },
-      error => {
-        console.log(<any> error);
-      }
-    );
+
+    this.refresh();
 
     this.busquedaForm = new FormGroup({
       nombre: new FormControl('', [Validators.required]),
@@ -36,6 +33,17 @@ export class HomeComponent implements OnInit {
 
   public hasError = (controlName: string, errorName: string) =>{
     return this.busquedaForm.controls[controlName].hasError(errorName);
+  }
+
+  refresh = () => {
+    this._personaService.getPersonas().subscribe(
+      result => {
+        this.dataSource = result;
+      },
+      error => {
+        console.log(<any> error);
+      }
+    );
   }
 
   onSubmit = (formValue) => {
@@ -55,10 +63,11 @@ export class HomeComponent implements OnInit {
   }
 
   eliminarPersona = (id) =>{
-        
+
     this._personaService.eliminarPersona(id).subscribe(
       result => {        
         console.log(result);
+        this.refresh();
       },
       error => {
         console.log(<any> error);
@@ -66,4 +75,17 @@ export class HomeComponent implements OnInit {
     );
   }
 
+  openDialog(id): void {
+    console.log(id);
+    const dialogRef = this.dialog.open(ConfirmacionDialogComponent, {
+      width: '350px',
+      data: "Do you confirm the deletion of this data?"
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        console.log('Yes clicked');
+        this.eliminarPersona(id);
+      }
+    });
+  }
 }

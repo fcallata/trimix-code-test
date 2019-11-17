@@ -3,6 +3,7 @@ import { PersonaService } from '../../services/persona.service'
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { Router,ActivatedRoute, Params } from '@angular/router'
+import { HomeComponent } from '../home/home.component';
 
 
 @Component({
@@ -70,7 +71,7 @@ export class PersonaComponent implements OnInit {
         console.log(response);
         //form.reset();
         //this.usuario_guardado = response;
-        console.log("guardado");
+        this._router.navigate(['home']);
       },
       error => {
         console.log(<any>error);
@@ -82,7 +83,8 @@ export class PersonaComponent implements OnInit {
     this._personaService.editarPersona(id, formValue).subscribe(
       response => {        
         //form.reset();
-        //this.usuario_guardado = response;        
+        //this.usuario_guardado = response;
+        this._router.navigate(['home']);
       },
       error => {
         console.log(<any>error);
