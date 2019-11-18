@@ -4,6 +4,11 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { ConfirmacionDialogComponent } from 'src/app/components/confirmacion-dialog/confirmacion-dialog.component';
 
+export interface Item {
+  value: string;
+  display: string;
+}
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -13,8 +18,14 @@ import { ConfirmacionDialogComponent } from 'src/app/components/confirmacion-dia
 export class HomeComponent implements OnInit {
 
   public busquedaForm: FormGroup;
-  displayedColumns: string[] = ['id', 'apellido', 'nombre','fechaNacimiento', 'tipo','numero', 'action'];
+  displayedColumns: string[] = ['id', 'nombre', 'apellido', 'numero', 'tipo', 'fechaNacimiento', 'action'];
   dataSource: any;
+  selectedValue: string; 
+  itemsTipo: Item[] = [
+    {value: 'DNI', display: 'DNI'},
+    {value: 'PASAPORTE', display: 'PASAPORTE'},
+    {value: 'CEDULA', display: 'CEDULA'}
+  ];
 
   constructor(
     private _personaService: PersonaService,
@@ -39,6 +50,7 @@ export class HomeComponent implements OnInit {
     this._personaService.getPersonas().subscribe(
       result => {
         this.dataSource = result;
+        console.log(result)
       },
       error => {
         console.log(<any> error);
@@ -79,11 +91,10 @@ export class HomeComponent implements OnInit {
     console.log(id);
     const dialogRef = this.dialog.open(ConfirmacionDialogComponent, {
       width: '350px',
-      data: "Do you confirm the deletion of this data?"
+      data: "Desea eliminar el registro?"
     });
     dialogRef.afterClosed().subscribe(result => {
-      if(result) {
-        console.log('Yes clicked');
+      if(result) {        
         this.eliminarPersona(id);
       }
     });

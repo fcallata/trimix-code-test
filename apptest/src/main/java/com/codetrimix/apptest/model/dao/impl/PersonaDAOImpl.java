@@ -55,7 +55,7 @@ public class PersonaDAOImpl implements PersonaDAO {
 		CriteriaQuery<Persona> criteriaQuery = criteriaBuilder.createQuery(Persona.class);
 		Root<Persona> personaRoot = criteriaQuery.from(Persona.class);
 		Predicate nombreCondition = criteriaBuilder.like(personaRoot.get("perNombre"), "%"+nombre+"%");
-		Predicate tipoCondition = criteriaBuilder.like(personaRoot.get("perTipoDocumento"), tipoDocumento);
+		Predicate tipoCondition = criteriaBuilder.like(personaRoot.get("perTipoDocumento"), tipoDocumento);		
 		criteriaQuery.where(criteriaBuilder.and(nombreCondition, tipoCondition));
 		TypedQuery<Persona> tipedQuery = sessionFactory.getCurrentSession().createQuery(criteriaQuery);
 		return tipedQuery.getResultList();

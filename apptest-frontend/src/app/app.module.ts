@@ -5,6 +5,7 @@ import { MaterialModule } from './material/material.module';
 import {routing, appRoutingProviders} from './app.routing'
 import { FormsModule , ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import {MAT_DATE_LOCALE} from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -29,7 +30,7 @@ import { ConfirmacionDialogComponent } from './components/confirmacion-dialog/co
     HttpClientModule
   ],
   entryComponents : [ConfirmacionDialogComponent],
-  providers: [appRoutingProviders],
+  providers: [appRoutingProviders, {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

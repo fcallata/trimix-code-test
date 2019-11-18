@@ -2,9 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { PersonaService } from '../../services/persona.service'
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { Router,ActivatedRoute, Params } from '@angular/router'
-import { HomeComponent } from '../home/home.component';
+import { Router,ActivatedRoute, Params } from '@angular/router';
 
+export interface Item {
+  value: string;
+  display: string;
+}
 
 @Component({
   selector: 'app-persona',
@@ -17,7 +20,12 @@ export class PersonaComponent implements OnInit {
   public personaForm: FormGroup;
   public idPersona: any;
   public editable: boolean;
-  public titulo: String;  
+  public titulo: String;
+  itemsTipo: Item[] = [
+    {value: 'DNI', display: 'DNI'},
+    {value: 'PASAPORTE', display: 'PASAPORTE'},
+    {value: 'CEDULA', display: 'CEDULA'}
+  ];
 
   constructor(
     private _personaService: PersonaService,
@@ -34,7 +42,7 @@ export class PersonaComponent implements OnInit {
     this.personaForm = new FormGroup({
       nombre: new FormControl('', [Validators.required]),
       apellido: new FormControl('', [Validators.required]),
-      fechaNacimiento: new FormControl(new Date(),[Validators.required]),
+      fechaNacimiento: new FormControl('',[Validators.required]),
       tipoDocumento: new FormControl('', [Validators.required]),
       nroDocumento: new FormControl('', [Validators.required])
     });
@@ -98,12 +106,14 @@ export class PersonaComponent implements OnInit {
       response => {
         this.editable = true;
         this.titulo = "Editar Persona";
-        let body = this.personaForm.controls;        
+        let body = this.personaForm.controls;
+        let date = Object.values(response)[1].split("/");
+        //07111085
+        body.fechaNacimiento.setValue(new Date(+date[2], date[1] - 1, +date[0]));
         body.nombre.setValue(Object.values(response)[3].toString());
-        body.apellido.setValue(Object.values(response)[2].toString());
-        //body.fechaNacimiento.setValue(Object.values(response)[1].toString());
+        body.apellido.setValue(Object.values(response)[2].toString());        
         body.tipoDocumento.setValue(Object.values(response)[4].toString());
-        body.nroDocumento.setValue(Object.values(response)[5].toString());        
+        body.nroDocumento.setValue(Object.values(response)[5].toString());                
       },
       error => {
         console.log(<any>error);

@@ -2,35 +2,44 @@
   <mat-card fxFlex="500px" fxFlex.xs="100%">    
       <mat-card-title>{{titulo}}</mat-card-title>      
       <form [formGroup]="personaForm" autocomplete="off" novalidate 
-            (ngSubmit)="onSubmit(personaForm.value)" fxLayout="column wrap"
-            fxLayoutAlign="center center" fxLayoutGap="10px">
+            (ngSubmit)="onSubmit(personaForm.value)" fxLayoutAlign="center center" fxLayoutGap="10px">
           <mat-card-content>
               <mat-form-field>
-                <input matInput type="text" placeholder="Nombre" formControlName="nombre" id="nombreId"/>              
+                <input matInput type="text" placeholder="Nombre" formControlName="nombre" id="nombreId" required/>
                 <mat-error *ngIf="hasError('nombre', 'required')">El nombre es requerido</mat-error>
               </mat-form-field>
 
               <mat-form-field>
-                  <input matInput type="text" placeholder="Apelliddo" formControlName="apellido" id="apellidoId"/>                  
-                  <mat-error *ngIf="hasError('apellido', 'required')">El Apellido es requerido</mat-error>                
-                </mat-form-field>
+                <input matInput type="text" placeholder="Apelliddo" formControlName="apellido" id="apellidoId" required/>                  
+                <mat-error *ngIf="hasError('apellido', 'required')">El Apellido es requerido</mat-error>                
+              </mat-form-field>
                  
-                <mat-form-field>
-                    <input matInput [matDatepicker]="picker" placeholder="Fecha de Nacimiento" formControlName="fechaNacimiento" id="fechaNacimientoId" 
-                        readonly (click)="picker.open()">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                  </mat-form-field>
-                 
-                <mat-form-field>
-                  <input matInput type="text" placeholder="Tipo de Documento" formControlName="tipoDocumento">          
-                  <mat-error *ngIf="hasError('tipoDocumento', 'required')">El Tipo de Documento es requerido</mat-error>                  
-                </mat-form-field>
+              <mat-form-field>
+                <input matInput [matDatepicker]="picker" placeholder="Fecha de Nacimiento" formControlName="fechaNacimiento" id="fechaNacimientoId" 
+                    readonly (click)="picker.open()" required>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngIf="hasError('fechaNacimiento', 'required')">La Fecha de Nacimiento es requerido</mat-error>                
+              </mat-form-field>
+              
+              <mat-form-field>
+                <mat-select placeholder = "Tipo Documento" formControlName="tipoDocumento" name="tipo" required>
+                  <mat-option *ngFor = "let item of itemsTipo" [value]="item.value">
+                    {{item.display}}
+                  </mat-option>        
+                </mat-select>
+                <mat-error *ngIf="hasError('tipoDocumento', 'required')">El Tipo de Documento es requerido</mat-error>
+              </mat-form-field>
 
-                <mat-form-field>
-                    <input matInput type="text" placeholder="Nro de Documento" formControlName="nroDocumento">          
-                    <mat-error *ngIf="hasError('nroDocumento', 'required')">El Tipo de Documento es requerido</mat-error>                  
-                  </mat-form-field>
+              <!--<mat-form-field>
+                <input matInput type="text" placeholder="Tipo de Documento" formControlName="tipoDocumento">          
+                <mat-error *ngIf="hasError('tipoDocumento', 'required')">El Tipo de Documento es requerido</mat-error>                  
+              </mat-form-field>-->
+
+              <mat-form-field>
+                  <input matInput type="number" placeholder="Nro de Documento" formControlName="nroDocumento" required>          
+                  <mat-error *ngIf="hasError('nroDocumento', 'required')">El Nro de Documento es requerido</mat-error>                  
+                </mat-form-field>
           </mat-card-content>
           <div *ngIf="editable; else noEditable">
               <mat-card-actions>
@@ -49,5 +58,5 @@
               </mat-card-actions>
           </ng-template>          
       </form>
-    </mat-card>
+  </mat-card>
 </section>

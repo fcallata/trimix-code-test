@@ -39,10 +39,10 @@
 			 <!-- Drop and re-create the database schema on startup -->
 			 <prop key="hbm2ddl.auto">create-drop</prop>
 			 <!-- dbcp connection pool configuration -->
-			 <prop key="hibernate.dbcp.initialSize">5</prop>
+			 <prop key="hibernate.dbcp.initialSize">50</prop>
 			 <prop key="hibernate.dbcp.maxTotal">20</prop>
 			 <prop key="hibernate.dbcp.maxIdle">10</prop>
-			 <prop key="hibernate.dbcp.minIdle">5</prop>
+			 <prop key="hibernate.dbcp.minIdle">50</prop>
 			 <prop key="hibernate.dbcp.maxWaitMillis">-1</prop> 
 		   </props>
 		</property>
